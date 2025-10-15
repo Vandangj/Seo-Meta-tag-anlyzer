@@ -56,9 +56,11 @@ app.use((req, res, next) => {
     serveStatic(app);
   }
 
-  // Serve on localhost for local development (Windows compatible)
+  // Use 0.0.0.0 for production (Render), localhost for development (Windows)
   const port = parseInt(process.env.PORT || '5000', 10);
-  server.listen(port, 'localhost', () => {
+  const host = process.env.NODE_ENV === 'production' ? '0.0.0.0' : 'localhost';
+  
+  server.listen(port, host, () => {
     log(`serving on port ${port}`);
   });
 })();
